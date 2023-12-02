@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2553089474417371904}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7943869, y: -4.203816, z: 0}
+  m_LocalPosition: {x: 0.37089533, y: -0.92867464, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.0006723404, g: 0, b: 1, a: 1}
   m_FlipX: 0
@@ -134,14 +134,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tail: {fileID: 0}
-  isTurnClockwise: 0
+  isTurnClockwise: 1
   rotationSpeed: 84
   rotRadius: 1
   gapValue: 1
   head: {fileID: 0}
   tails: []
   objTransform: {fileID: 0}
-  currentRotationPoint: {x: 0.4234916, y: -3.2751412}
-  flownTime: 18.57143
-  pointIndex: 100052
-  endTime: 0
+  currentRotationPoint: {x: 0, y: 0}
+  flownTime: 1.4285715
+  pointIndex: 2748
+  endTime: 0.8121052

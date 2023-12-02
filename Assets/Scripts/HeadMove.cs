@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -58,7 +59,7 @@ public class HeadMove : MonoBehaviour
         {
             GameObject go = Instantiate(tail);
             go.SetActive(true);
-            AddTail(tail.GetComponent<CircleCollider2D>());
+            AddTail(go.GetComponent<CircleCollider2D>());
         }
     }
 
@@ -74,7 +75,7 @@ public class HeadMove : MonoBehaviour
             isTurnClockwise = isTurnClockwise ? false : true;
             //회전 중심 변경
             currentRotationPoint = newPoint;
-            //(1,0)과 현재 중심에서 머리를 향하는 방향 사이의 각도(부호o)
+            //Vector2.right과 현재 중심에서 머리를 향하는 방향 사이의 각도(부호o)
             float nextAngle = Vector2.SignedAngle(Vector2.right, (Vector2)objTransform.position - currentRotationPoint);
             //새로운 회전점 정보 입력
             PointInfo newPointInfo = new PointInfo(isTurnClockwise, nextAngle, newPoint, flownTime);
@@ -85,18 +86,29 @@ public class HeadMove : MonoBehaviour
         //회전 중심을 기준으로 회전
         Vector2 newPos = Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, rotAxis) * ((Vector2)objTransform.position - currentRotationPoint);
         objTransform.position = currentRotationPoint + newPos;
+        Debug.DrawLine(transform.position, currentRotationPoint, Color.blue);
     }
     void TailMove()
     {
         for(int i = 0; i < tails.Count; i++)
         {
             TailMove tailMoveScript = tails[i].GetComponent<TailMove>();
-            for(int j = 0; j < rotPointInfo.Count; j++)
+            PointInfo inputInfo = new PointInfo();
+            int j = 0;
+            for (; j < rotPointInfo.Count; j++)
             {
-                if (tailMoveScript.flownTime >= rotPointInfo[j].endTime)
+                if (tailMoveScript.flownTime >= rotPointInfo[j].startTime)
                 {
-                    tailMoveScript.SetInfo(rotPointInfo[j]);
+                    inputInfo = rotPointInfo[j];
                 }
+                else
+                    break;
+            }
+            if (tailMoveScript.pointIndex >= j)
+                continue;
+            else
+            {
+                tailMoveScript.SetInfo(inputInfo);
             }
         }
     }
@@ -106,16 +118,23 @@ public class HeadMove : MonoBehaviour
         /*꼬리 오브젝트 생성하면서 현재 꼬리 오브젝트 개수를 기반으로 계산한
         생성될 시간을 바탕으로 PointINfo 입력.
         */
-        //필요 최소 각도
+        //필요 최소 각도(deg)
         float theta = Mathf.Asin(radius / rotRadius) * 2 * Mathf.Rad2Deg;
-        //얼마나 전 위치에 넣어야 하는지 시간 계산
 
+        //얼마나 전 위치에 넣어야 하는지 시간 계산
         float timeBefore = (tails.Count()+1) * (theta / rotationSpeed) * gapValue;
+        //가능성 적긴 하지만 
+        if(timeBefore >= flownTime)
+        {
+            timeBefore = flownTime;
+        }
+        //Debug.Log("최소 각도 = "+ theta +", " + timeBefore + "초 전에 넣음.");
         PointInfo returnInfo = new PointInfo();
         int i = 0;
         for (; i < rotPointInfo.Count;  i++)
         {
-            if (rotPointInfo[i].startTime <= timeBefore)
+            //flownTime - timeBefore = 머리가 이 순간에 위치한 좌표가 꼬리가 위치할 좌표
+            if (rotPointInfo[i].startTime <= flownTime - timeBefore)
             {
                 returnInfo = rotPointInfo[i];
             }
@@ -125,7 +144,7 @@ public class HeadMove : MonoBehaviour
             }
         }
         TailMove newTailScript = newTail.GetComponent<TailMove>();
-        newTailScript.SetInfo(returnInfo, rotationSpeed, rotRadius, timeBefore, i);
+        newTailScript.SetInfo(returnInfo, i, rotationSpeed, rotRadius, flownTime - timeBefore);
         tails.Add(newTail.gameObject);
 
     }

@@ -18,6 +18,7 @@ public class PointInfo
         startAngle = angle;
         rotationCenter = center;
         startTime = sTime;
+        endTime = int.MaxValue;
 }
     ~PointInfo() { }
     public bool isTurnClockwise;
