@@ -23,8 +23,12 @@ public class HeadCollisionController : MonoBehaviour
         {
             Debug.Log("Tail");
         }
+        if (collision.gameObject.tag == "Wall")
+        {
+            Debug.Log("Wall");
+        }
 
-        if(collision.gameObject.tag == "Tail" || collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Tail" || collision.gameObject.tag == "Wall")
         {
             Debug.Log(collision.name);
             //게임오버
