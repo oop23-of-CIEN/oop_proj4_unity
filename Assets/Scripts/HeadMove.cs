@@ -86,6 +86,7 @@ public class HeadMove : MonoBehaviour
         //회전 중심을 기준으로 회전
         Vector2 newPos = Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, rotAxis) * ((Vector2)objTransform.position - currentRotationPoint);
         objTransform.position = currentRotationPoint + newPos;
+        
         Debug.DrawLine(transform.position, currentRotationPoint, Color.blue);
     }
     void TailMove()
