@@ -7,31 +7,30 @@ using UnityEngine.Rendering;
 
 public class HeadMove : MonoBehaviour
 {
-    public GameObject tail;
+    [SerializeField]
+    private GameObject tail;
+    [SerializeField] private TailInstatntiater _tailInstantiater;
+    protected bool isTurnClockwise = true;
+    [SerializeField]
+    protected float rotationSpeed = 90f;
 
-    //truning clockwise?
-    public bool isTurnClockwise = true;
+    [SerializeField]
+    protected float rotRadius = 0.77f;
+    protected float radius;
 
-    [Range(0f, 360f), Tooltip("degree/sec")]
-    public float rotationSpeed;
+    [SerializeField]  protected GameObject head;
 
-    [Range(0f,2f), Tooltip("Rotation Radius")]
-    public float rotRadius;
-    float radius;
 
-    [SerializeField, Range(0.5f, 1.5f), Tooltip("따라다닐 간격 조정용 변수")]
-    float gapValue = 1f;
-    [SerializeField, Tooltip("Head obj")]
-    GameObject head;
+    protected float gapValue = 1f;
 
     [SerializeField, Tooltip("Tail objs")]
-    List<GameObject> tails = new List<GameObject>();
+    protected List<GameObject> tails = new List<GameObject>();
 
-    List<PointInfo> rotPointInfo = new List<PointInfo>();
+    protected List<PointInfo> rotPointInfo = new List<PointInfo>();
 
     public Transform objTransform;
     /// <summary>
-    /// ratation point when game start
+    /// rotation point when game start
     /// </summary>
     Vector2 startRotationPos = Vector2.zero;
 
@@ -47,6 +46,7 @@ public class HeadMove : MonoBehaviour
         rotPointInfo.Add(newinfo);
         radius = head.GetComponent<CircleCollider2D>().radius;
         objTransform = head.GetComponent<Transform>();
+        
     }
 
     // Update is called once per frame
@@ -57,7 +57,7 @@ public class HeadMove : MonoBehaviour
         TailMove();
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            GameObject go = Instantiate(tail);
+            GameObject go = EventManager.Instance.CallOnCreateTail();
             go.SetActive(true);
             AddTail(go.GetComponent<CircleCollider2D>());
         }
@@ -149,10 +149,6 @@ public class HeadMove : MonoBehaviour
         tails.Add(newTail.gameObject);
 
     }
-
-    public void DeleteTail()
-    {
-        
-    }
+    
 
 }
