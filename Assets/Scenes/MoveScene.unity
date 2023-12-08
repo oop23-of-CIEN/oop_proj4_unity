@@ -276,8 +276,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2553089474417371904, guid: 4e5a4570e4e3890488fd618cf80eba51, type: 3}
     - target: {fileID: 4919622523550925256, guid: 6d97f9dce95739f4eb4b7dd88277e49a, type: 3}
+      propertyPath: gapValue
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919622523550925256, guid: 6d97f9dce95739f4eb4b7dd88277e49a, type: 3}
       propertyPath: rotRadius
-      value: 0.77
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4919622523550925256, guid: 6d97f9dce95739f4eb4b7dd88277e49a, type: 3}
       propertyPath: objTransform
@@ -285,7 +289,7 @@ PrefabInstance:
       objectReference: {fileID: 8372324133489067893}
     - target: {fileID: 4919622523550925256, guid: 6d97f9dce95739f4eb4b7dd88277e49a, type: 3}
       propertyPath: rotationSpeed
-      value: 196
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

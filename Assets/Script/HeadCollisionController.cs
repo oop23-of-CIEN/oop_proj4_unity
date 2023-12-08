@@ -18,7 +18,7 @@ public class HeadCollisionController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.name);
+        Debug.Log(collision.tag);
         if (collision.gameObject.tag == "Tail")
         {
             Debug.Log("Tail");
