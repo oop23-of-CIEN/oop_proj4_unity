@@ -20,8 +20,8 @@ public class HeadMove : MonoBehaviour
 
     [SerializeField]  protected GameObject head;
 
-
-    protected float gapValue = 1f;
+    [SerializeField]
+    protected float gapValue = 1.2f;
 
     [SerializeField, Tooltip("Tail objs")]
     protected List<GameObject> tails = new List<GameObject>();
@@ -40,6 +40,7 @@ public class HeadMove : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
+        
         currentRotationPoint = startRotationPos;
         objTransform.position = new Vector2(rotRadius, 0);
         PointInfo newinfo = new PointInfo();
@@ -49,18 +50,23 @@ public class HeadMove : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        EventManager.Instance.AddTail += AddTail;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.AddTail -= AddTail;
+    }
+
     // Update is called once per frame
     void Update()
     {
         flownTime += Time.deltaTime;
         Move();
         TailMove();
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            GameObject go = EventManager.Instance.CallOnCreateTail();
-            go.SetActive(true);
-            AddTail(go.GetComponent<CircleCollider2D>());
-        }
+        
     }
 
     void Move()
@@ -114,8 +120,12 @@ public class HeadMove : MonoBehaviour
         }
     }
 
-    public void AddTail(CircleCollider2D newTail)
+    public void AddTail()
     {
+
+        GameObject go = EventManager.Instance.CallOnCreateTail();
+        go.SetActive(true);
+        CircleCollider2D newTail = go.GetComponent<CircleCollider2D>();
         /*꼬리 오브젝트 생성하면서 현재 꼬리 오브젝트 개수를 기반으로 계산한
         생성될 시간을 바탕으로 PointINfo 입력.
         */
