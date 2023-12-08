@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemValue : MonoBehaviour
 {
-    private int _value;
+    [SerializeField]private int _value;
     public int GetValue() { return _value; }
+
+    public void SetValue(int v) { _value = v; }
 }

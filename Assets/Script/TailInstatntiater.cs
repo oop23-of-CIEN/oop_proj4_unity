@@ -6,18 +6,23 @@ public class TailInstatntiater : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _tails;
 
-    private void Awake()
+    private void Start()
     {
         EventManager.Instance.CreateTail += GetNewTail;
+        Debug.Log("연결");
     }
 
     private void OnDestroy()
     {
-        EventManager.Instance.CreateTail -= GetNewTail;
+        EventManager.Instance.CreateTail -= null;
     }
 
     public GameObject GetNewTail()
     {
+        Debug.Log("꼬리 추가");
         return Instantiate(_tails[Random.Range(0, _tails.Count)]);
     }
+
+    
+
 }
