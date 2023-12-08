@@ -7,31 +7,30 @@ using UnityEngine.Rendering;
 
 public class HeadMove : MonoBehaviour
 {
-    public GameObject tail;
+    [SerializeField]
+    private GameObject tail;
+    [SerializeField] private TailInstatntiater _tailInstantiater;
+    protected bool isTurnClockwise = true;
+    [SerializeField]
+    protected float rotationSpeed = 90f;
 
-    //truning clockwise?
-    public bool isTurnClockwise = true;
+    [SerializeField]
+    protected float rotRadius = 0.77f;
+    protected float radius;
 
-    [Range(0f, 360f), Tooltip("degree/sec")]
-    public float rotationSpeed;
+    [SerializeField]  protected GameObject head;
 
-    [Range(0f,2f), Tooltip("Rotation Radius")]
-    public float rotRadius;
-    float radius;
-
-    [SerializeField, Range(0.5f, 1.5f), Tooltip("따라다닐 간격 조정용 변수")]
-    float gapValue = 1f;
-    [SerializeField, Tooltip("Head obj")]
-    GameObject head;
+    [SerializeField]
+    protected float gapValue = 1.2f;
 
     [SerializeField, Tooltip("Tail objs")]
-    List<GameObject> tails = new List<GameObject>();
+    protected List<GameObject> tails = new List<GameObject>();
 
-    List<PointInfo> rotPointInfo = new List<PointInfo>();
+    protected List<PointInfo> rotPointInfo = new List<PointInfo>();
 
     public Transform objTransform;
     /// <summary>
-    /// ratation point when game start
+    /// rotation point when game start
     /// </summary>
     Vector2 startRotationPos = Vector2.zero;
 
@@ -41,12 +40,24 @@ public class HeadMove : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
+        
         currentRotationPoint = startRotationPos;
         objTransform.position = new Vector2(rotRadius, 0);
         PointInfo newinfo = new PointInfo();
         rotPointInfo.Add(newinfo);
         radius = head.GetComponent<CircleCollider2D>().radius;
         objTransform = head.GetComponent<Transform>();
+        
+    }
+
+    private void Start()
+    {
+        EventManager.Instance.AddTail += AddTail;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.AddTail -= AddTail;
     }
 
     // Update is called once per frame
@@ -55,12 +66,7 @@ public class HeadMove : MonoBehaviour
         flownTime += Time.deltaTime;
         Move();
         TailMove();
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            GameObject go = Instantiate(tail);
-            go.SetActive(true);
-            AddTail(go.GetComponent<CircleCollider2D>());
-        }
+        
     }
 
     void Move()
@@ -114,8 +120,12 @@ public class HeadMove : MonoBehaviour
         }
     }
 
-    public void AddTail(CircleCollider2D newTail)
+    public void AddTail()
     {
+
+        GameObject go = EventManager.Instance.CallOnCreateTail();
+        go.SetActive(true);
+        CircleCollider2D newTail = go.GetComponent<CircleCollider2D>();
         /*꼬리 오브젝트 생성하면서 현재 꼬리 오브젝트 개수를 기반으로 계산한
         생성될 시간을 바탕으로 PointINfo 입력.
         */
@@ -149,10 +159,6 @@ public class HeadMove : MonoBehaviour
         tails.Add(newTail.gameObject);
 
     }
-
-    public void DeleteTail()
-    {
-        
-    }
+    
 
 }
