@@ -53,11 +53,14 @@ public class HeadMove : MonoBehaviour
     private void Start()
     {
         EventManager.Instance.AddTail += AddTail;
+        EventManager.Instance.GameOver += GameOver;
     }
 
     private void OnDestroy()
     {
         EventManager.Instance.AddTail -= AddTail;
+
+        EventManager.Instance.GameOver -= GameOver;
     }
 
     // Update is called once per frame
@@ -198,5 +201,15 @@ public class HeadMove : MonoBehaviour
         newTailScript.SetInfo(returnInfo, i, rotationSpeed, rotRadius, flownTime - timeBefore);
         tails.Add(tail.gameObject);
 
+    }
+
+    private void GameOver()
+    {
+        int num = tails.Count;
+        for(int i =0;i<num; ++i)
+        {
+            Destroy(tails[i]);
+        }
+        Destroy(gameObject);
     }
 }

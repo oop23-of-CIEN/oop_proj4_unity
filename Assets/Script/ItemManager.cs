@@ -16,14 +16,14 @@ public class ItemManager : MonoBehaviour
     private void Start()
     {
         EventManager.Instance.CreateItem += CreateItem;
-        EventManager.Instance.UseItem += UseItem;
 
+        CreateItem();
     }
 
     private void OnDestroy()
     {
         EventManager.Instance.CreateItem -= CreateItem;
-        EventManager.Instance.UseItem -= UseItem;
+
     }
 
     private GameObject GetItem()
@@ -53,10 +53,7 @@ public class ItemManager : MonoBehaviour
 
     }
 
-    public void UseItem(GameObject item)
-    {
-        
-    }
+
 
 }
     

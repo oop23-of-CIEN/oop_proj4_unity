@@ -26,10 +26,9 @@ public class EventManager : MonoBehaviour
     public delegate GameObject GOEvent();
 
     public Action CreateItem;
-    public Action AddTail;
-    public Action<GameObject> UseItem;
+    public Action<GameObject> AddTail;
+    public Action GameOver;
     public Func<GameObject> CreateTail;
-
     public void CallOnCreateItem()
     {
         CreateItem?.Invoke();
@@ -40,15 +39,16 @@ public class EventManager : MonoBehaviour
         return CreateTail?.Invoke();
     }
 
-    public void CallOnAddTail()
+    public void CallOnAddTail(GameObject tail)
     {
-        AddTail?.Invoke();
+        AddTail?.Invoke(tail);
     }
 
-    public void CallOnUseItem(GameObject item)
+    public void CallOnGameOver()
     {
-        UseItem?.Invoke(item);
+        GameOver?.Invoke();
     }
+
 
 
 
