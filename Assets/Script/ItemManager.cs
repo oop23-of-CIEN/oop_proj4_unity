@@ -31,6 +31,7 @@ public class ItemManager : MonoBehaviour
         var index = Random.Range(0, _items.Count);
         GameObject i = Instantiate(_items[index]);
         i.GetComponent<ItemValue>().SetValue(index+1);
+        Debug.Log("Item index is " + i);
         return i;
     }
     public void CreateItem()

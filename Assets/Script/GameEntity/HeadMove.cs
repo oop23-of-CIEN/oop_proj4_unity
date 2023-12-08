@@ -24,7 +24,7 @@ public class HeadMove : MonoBehaviour
     protected float gapValue = 1.2f;
 
     [SerializeField, Tooltip("Tail objs")]
-    protected List<GameObject> tails = new List<GameObject>();
+    public List<GameObject> tails = new List<GameObject>();
 
     protected List<PointInfo> rotPointInfo = new List<PointInfo>();
 
@@ -126,8 +126,9 @@ public class HeadMove : MonoBehaviour
         GameObject go = EventManager.Instance.CallOnCreateTail();
         go.SetActive(true);
         CircleCollider2D newTail = go.GetComponent<CircleCollider2D>();
-        /*꼬리 오브젝트 생성하면서 현재 꼬리 오브젝트 개수를 기반으로 계산한
-        생성될 시간을 바탕으로 PointINfo 입력.
+        /*
+        꼬리 오브젝트 생성하면서 현재 꼬리 오브젝트 개수를 기반으로 계산한
+        생성될 시간을 바탕으로 PointInfo 입력.
         */
         //필요 최소 각도(deg)
         float theta = Mathf.Asin(radius / rotRadius) * 2 * Mathf.Rad2Deg;

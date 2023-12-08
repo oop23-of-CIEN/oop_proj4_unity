@@ -19,7 +19,6 @@ public class TailInstatntiater : MonoBehaviour
 
     public GameObject GetNewTail()
     {
-        Debug.Log("²¿¸® Ãß°¡");
         return Instantiate(_tails[Random.Range(0, _tails.Count)]);
     }
 
