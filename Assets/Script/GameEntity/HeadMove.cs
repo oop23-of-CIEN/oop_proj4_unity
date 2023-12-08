@@ -24,7 +24,7 @@ public class HeadMove : MonoBehaviour
     protected float gapValue = 1.2f;
 
     [SerializeField, Tooltip("Tail objs")]
-    protected List<GameObject> tails = new List<GameObject>();
+    public List<GameObject> tails = new List<GameObject>();
 
     protected List<PointInfo> rotPointInfo = new List<PointInfo>();
 
@@ -122,12 +122,16 @@ public class HeadMove : MonoBehaviour
 
     public void AddTail()
     {
-
+        
         GameObject go = EventManager.Instance.CallOnCreateTail();
         go.SetActive(true);
         CircleCollider2D newTail = go.GetComponent<CircleCollider2D>();
-        /*꼬리 오브젝트 생성하면서 현재 꼬리 오브젝트 개수를 기반으로 계산한
-        생성될 시간을 바탕으로 PointINfo 입력.
+       
+
+
+        /*
+        꼬리 오브젝트 생성하면서 현재 꼬리 오브젝트 개수를 기반으로 계산한
+        생성될 시간을 바탕으로 PointInfo 입력.
         */
         //필요 최소 각도(deg)
         float theta = Mathf.Asin(radius / rotRadius) * 2 * Mathf.Rad2Deg;
@@ -159,6 +163,40 @@ public class HeadMove : MonoBehaviour
         tails.Add(newTail.gameObject);
 
     }
-    
 
+    public void AddTail(GameObject tail)
+    {
+        //꼬리 오브젝트 생성하면서 현재 꼬리 오브젝트 개수를 기반으로 계산한
+        //생성될 시간을 바탕으로 PointInfo 입력.
+        
+        //필요 최소 각도(deg)
+        float theta = Mathf.Asin(radius / rotRadius) * 2 * Mathf.Rad2Deg;
+
+        //얼마나 전 위치에 넣어야 하는지 시간 계산
+        float timeBefore = (tails.Count() + 1) * (theta / rotationSpeed) * gapValue;
+        //가능성 적긴 하지만 
+        if (timeBefore >= flownTime)
+        {
+            timeBefore = flownTime;
+        }
+        //Debug.Log("최소 각도 = "+ theta +", " + timeBefore + "초 전에 넣음.");
+        PointInfo returnInfo = new PointInfo();
+        int i = 0;
+        for (; i < rotPointInfo.Count; i++)
+        {
+            //flownTime - timeBefore = 머리가 이 순간에 위치한 좌표가 꼬리가 위치할 좌표
+            if (rotPointInfo[i].startTime <= flownTime - timeBefore)
+            {
+                returnInfo = rotPointInfo[i];
+            }
+            else
+            {
+                break;
+            }
+        }
+        TailMove newTailScript = tail.GetComponent<TailMove>();
+        newTailScript.SetInfo(returnInfo, i, rotationSpeed, rotRadius, flownTime - timeBefore);
+        tails.Add(tail.gameObject);
+
+    }
 }

@@ -6,15 +6,6 @@ using UnityEngine;
 
 public class TailMove : HeadMove
 {
-    private void Start()
-    {
-       
-    }
-
-    private void OnDestroy()
-    {
-        
-    }
     public int pointIndex;
 
     private void OnEnable()
