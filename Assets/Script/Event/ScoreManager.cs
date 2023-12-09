@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] private int _bestScore;
+    private int _bestScore;
+
     private static ScoreManager _instance;
     public static ScoreManager Instance => _instance;
     public void Awake()
@@ -28,8 +29,6 @@ public class ScoreManager : MonoBehaviour
         EventManager.Instance.GetHighestScore -= GetHighestScore;
         EventManager.Instance.UpdateScore -= UpdateScore;
     }
-
-
 
     private int GetHighestScore()
     {

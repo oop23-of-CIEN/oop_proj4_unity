@@ -7,8 +7,7 @@ using UnityEngine.Rendering;
 
 public class HeadMove : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject tail;
+
     [SerializeField] private TailInstatntiater _tailInstantiater;
     protected bool isTurnClockwise = true;
     [SerializeField]
