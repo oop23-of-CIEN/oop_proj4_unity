@@ -28,21 +28,11 @@ public class HeadCollisionController : MonoBehaviour
 
         if (collision.gameObject.tag == "Item")
         {
-            //EventManager.Instance.CallOnUseItem(collision.gameObject);
-            //int num = collision.gameObject.GetComponent<ItemValue>().GetValue();
-            //점수추가
+            
             uiController.GetScore();
             GameObject tail = collision.GetComponent<ItemInfoHolder>().getTail;
             EventManager.Instance.CallOnAddTail(tail);
-            /*
-            Debug.Log(num);
-            //일단 아이템 획득시 꼬리 1개 생성을 위해 주석처리
-            for (int i = 0; i < num; ++i)
-            {
-                EventManager.Instance.CallOnAddTail();
-                Debug.Log("추가");
-            }
-            */
+            
             Destroy(collision.gameObject);
 
             EventManager.Instance.CallOnCreateItem();
