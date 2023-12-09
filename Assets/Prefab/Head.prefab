@@ -166,6 +166,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveScript: {fileID: 0}
   uiController: {fileID: 0}
+  itemPickupSound: {fileID: -3951809477579995436}
+  itemPickupEffects:
+  - {fileID: 8300000, guid: bec5b0ea68e948d46a6bfd713dd30649, type: 3}
+  - {fileID: 8300000, guid: aec0373667187c945bad8f3e6a6a1cf5, type: 3}
+  - {fileID: 8300000, guid: 64a72910ccd4bcf4aaee4da48cdb6be9, type: 3}
 --- !u!58 &4295740647509309923
 CircleCollider2D:
   m_ObjectHideFlags: 0
