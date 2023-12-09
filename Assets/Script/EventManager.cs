@@ -5,13 +5,8 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-
-    private static EventManager _instance;
-
-
+    private static EventManager _instance;  
     public static EventManager Instance => _instance;
-
-
     public void Awake()
     {
         if (_instance == null)
@@ -28,7 +23,10 @@ public class EventManager : MonoBehaviour
     public Action CreateItem;
     public Action<GameObject> AddTail;
     public Action GameOver;
+    public Action<int> UpdateScore;
     public Func<GameObject> CreateTail;
+    public Func<Transform> GetHeadPos;
+    public Func<int> GetHighestScore;
     public void CallOnCreateItem()
     {
         CreateItem?.Invoke();
@@ -47,6 +45,21 @@ public class EventManager : MonoBehaviour
     public void CallOnGameOver()
     {
         GameOver?.Invoke();
+    }
+
+    public Transform CallOnGetHeadPos()
+    {
+        return GetHeadPos?.Invoke();
+    }
+
+    public void CallOnUpdateScore(int score)
+    {
+        UpdateScore?.Invoke(score);
+    }
+
+    public int CallOnGetHighestScore()
+    {
+        return (int)(GetHighestScore?.Invoke());
     }
 
 

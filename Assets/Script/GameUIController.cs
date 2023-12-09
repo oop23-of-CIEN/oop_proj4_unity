@@ -15,7 +15,11 @@ public class GameUIController : MonoBehaviour
     private Coroutine flashingCoroutine;
 
     int score = 0;
-    int highestScore = 0;
+    int highestScore
+    {
+        get { return EventManager.Instance.CallOnGetHighestScore(); }
+        set { EventManager.Instance.CallOnUpdateScore(value); }
+    }
 
     bool isGameFinished = false;
 
@@ -52,8 +56,10 @@ public class GameUIController : MonoBehaviour
             isGameFinished = true;
             flashingCoroutine = StartCoroutine(BlinkText());
         }
-        
+
+
         if (highestScore < score) { highestScore = score; }
+        Debug.Log(highestScore);
 
         highestLabel.text = "highest score";
         highestScoreText.text = highestScore.ToString();
