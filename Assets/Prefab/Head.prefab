@@ -165,12 +165,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveScript: {fileID: 0}
-  uiController: {fileID: 0}
-  itemPickupSound: {fileID: -3951809477579995436}
-  itemPickupEffects:
-  - {fileID: 8300000, guid: bec5b0ea68e948d46a6bfd713dd30649, type: 3}
-  - {fileID: 8300000, guid: aec0373667187c945bad8f3e6a6a1cf5, type: 3}
-  - {fileID: 8300000, guid: 64a72910ccd4bcf4aaee4da48cdb6be9, type: 3}
 --- !u!58 &4295740647509309923
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -245,10 +239,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7a9190fde3dd6469d2b399cc14c819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tail: {fileID: 1519375560995796509, guid: 38b9e1c7bb6b26a4289637aaff06f2af, type: 3}
+  imageTrans: {fileID: 0}
   _tailInstantiater: {fileID: 0}
-  rotationSpeed: 90
-  rotRadius: 0.3
+  rotationSpeed: 135
+  rotRadius: 0.2
   head: {fileID: 1293182225322238319}
   gapValue: 1
   tails: []

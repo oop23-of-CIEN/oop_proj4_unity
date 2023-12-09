@@ -73,7 +73,7 @@ public class HeadMove : MonoBehaviour
         Mirror();
     }
 
-
+   
     protected void Mirror()
     {
         float y = transform.position.y - currentRotationPoint.y;
