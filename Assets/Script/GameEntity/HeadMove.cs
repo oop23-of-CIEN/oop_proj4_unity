@@ -10,10 +10,10 @@ public class HeadMove : MonoBehaviour
     [SerializeField] private Transform imageTrans;
     [SerializeField] private TailInstatntiater _tailInstantiater;
     protected bool isTurnClockwise = true;
-    [SerializeField]
+    [SerializeField, Range(0f, 360f)]
     protected float rotationSpeed = 90f;
 
-    [SerializeField]
+    [SerializeField, Range(0f, 1f)]
     protected float rotRadius = 0.77f;
     protected float radius;
 
