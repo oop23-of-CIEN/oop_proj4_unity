@@ -27,11 +27,13 @@ public class GameUIController : MonoBehaviour
     {
         SetScoreText();
         EventManager.Instance.GameOver += SetGameOver;
+        EventManager.Instance.PlusScore += GetScore;
     }
 
     private void OnDestroy()
     {
         EventManager.Instance.GameOver -= SetGameOver;
+        EventManager.Instance.PlusScore -= GetScore;
 
     }
 

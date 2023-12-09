@@ -35,6 +35,7 @@ public class EventManager : MonoBehaviour
     public Func<Transform> GetHeadPos;
     // 최고 점수 가져오기
     public Func<int> GetHighestScore;
+    public Action PlusScore;
 
 
     //이벤트 호출
@@ -69,6 +70,11 @@ public class EventManager : MonoBehaviour
     public int CallOnGetHighestScore()
     {
         return (int)(GetHighestScore?.Invoke());
+    }
+
+    public void CallOnPlusScore()
+    {
+        PlusScore?.Invoke();
     }
 
 }
