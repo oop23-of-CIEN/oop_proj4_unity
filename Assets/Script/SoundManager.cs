@@ -1,25 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
     AudioListener listner;
 
+    public AudioClip itemPickupEffect;
 
-    private void OnEnable()
+    private static SoundManager instance;
+    public static SoundManager Instance => instance;
+    public void Awake()
     {
-        listner = GetComponent<AudioListener>();
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (instance == null) // ΩÃ±€≈Ê µÓ∑œ
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else Destroy(this);
     }
 }
