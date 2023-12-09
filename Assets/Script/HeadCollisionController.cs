@@ -21,29 +21,21 @@ public class HeadCollisionController : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             //게임종료
-            uiController.SetGameOver();
+            //uiController.SetGameOver();
+            EventManager.Instance.CallOnGameOver();
         }
 
 
         if (collision.gameObject.tag == "Item")
         {
-            //EventManager.Instance.CallOnUseItem(collision.gameObject);
-            //int num = collision.gameObject.GetComponent<ItemValue>().GetValue();
-            //점수추가
+            
             uiController.GetScore();
             GameObject tail = collision.GetComponent<ItemInfoHolder>().getTail;
-            moveScript.AddTail();
-            /*
-            Debug.Log(num);
-            //일단 아이템 획득시 꼬리 1개 생성을 위해 주석처리
-            for (int i = 0; i < num; ++i)
-            {
-                EventManager.Instance.CallOnAddTail();
-                Debug.Log("추가");
-            }
-            */
+            EventManager.Instance.CallOnAddTail(tail);
+            
             Destroy(collision.gameObject);
-            Debug.Log("충돌");
+
+            EventManager.Instance.CallOnCreateItem();
         }
     }
 }

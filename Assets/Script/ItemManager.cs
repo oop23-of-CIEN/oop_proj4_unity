@@ -16,14 +16,13 @@ public class ItemManager : MonoBehaviour
     private void Start()
     {
         EventManager.Instance.CreateItem += CreateItem;
-        EventManager.Instance.UseItem += UseItem;
-
+        CreateItem();
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         EventManager.Instance.CreateItem -= CreateItem;
-        EventManager.Instance.UseItem -= UseItem;
+
     }
 
     private GameObject GetItem()
@@ -39,7 +38,7 @@ public class ItemManager : MonoBehaviour
         Vector3 position = new Vector3(Random.Range(_left, _right), Random.Range(_down, _up), 0);
        
 
-        if (Vector3.Magnitude(position - _head.position) < _distance + 0.01f)
+        if (Vector3.Magnitude(position - EventManager.Instance.CallOnGetHeadPos().position) < _distance + 0.01f)
         {
             position += new Vector3(_distance, 0, 0);
             if (position.x > _right)
@@ -53,10 +52,7 @@ public class ItemManager : MonoBehaviour
 
     }
 
-    public void UseItem(GameObject item)
-    {
-        
-    }
+
 
 }
     

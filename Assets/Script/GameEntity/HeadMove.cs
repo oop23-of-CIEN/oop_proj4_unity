@@ -47,17 +47,23 @@ public class HeadMove : MonoBehaviour
         rotPointInfo.Add(newinfo);
         radius = head.GetComponent<CircleCollider2D>().radius;
         objTransform = head.GetComponent<Transform>();
-        
+        EventManager.Instance.AddTail += AddTail;
+        EventManager.Instance.GameOver += GameOver;
+        EventManager.Instance.GetHeadPos += GetHeadPos;
+
     }
 
     private void Start()
     {
-        EventManager.Instance.AddTail += AddTail;
+        
     }
 
     private void OnDestroy()
     {
         EventManager.Instance.AddTail -= AddTail;
+
+        EventManager.Instance.GameOver -= GameOver;
+        EventManager.Instance.GetHeadPos -= GetHeadPos;
     }
 
     // Update is called once per frame
@@ -198,5 +204,20 @@ public class HeadMove : MonoBehaviour
         newTailScript.SetInfo(returnInfo, i, rotationSpeed, rotRadius, flownTime - timeBefore);
         tails.Add(tail.gameObject);
 
+    }
+
+    private Transform GetHeadPos()
+    {
+        return objTransform;
+    }
+
+    private void GameOver()
+    {
+        int num = tails.Count;
+        for(int i =0;i<num; ++i)
+        {
+            Destroy(tails[i]);
+        }
+        Destroy(gameObject);
     }
 }

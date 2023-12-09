@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameUIController : MonoBehaviour
@@ -14,13 +15,24 @@ public class GameUIController : MonoBehaviour
     private Coroutine flashingCoroutine;
 
     int score = 0;
-    int highestScore = 0;
+    int highestScore
+    {
+        get { return EventManager.Instance.CallOnGetHighestScore(); }
+        set { EventManager.Instance.CallOnUpdateScore(value); }
+    }
 
     bool isGameFinished = false;
 
     private void Start()
     {
         SetScoreText();
+        EventManager.Instance.GameOver += SetGameOver;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.GameOver -= SetGameOver;
+
     }
 
     public void GetScore()
@@ -44,8 +56,10 @@ public class GameUIController : MonoBehaviour
             isGameFinished = true;
             flashingCoroutine = StartCoroutine(BlinkText());
         }
-        
+
+
         if (highestScore < score) { highestScore = score; }
+        Debug.Log(highestScore);
 
         highestLabel.text = "highest score";
         highestScoreText.text = highestScore.ToString();
@@ -86,6 +100,7 @@ public class GameUIController : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 Reset();
+                SceneManager.LoadScene("GameScene");
 
             }
             else if (Input.GetKey(KeyCode.Escape))
