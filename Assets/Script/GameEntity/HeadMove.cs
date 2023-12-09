@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 
 public class HeadMove : MonoBehaviour
 {
-
+    [SerializeField] private Transform imageTrans;
     [SerializeField] private TailInstatntiater _tailInstantiater;
     protected bool isTurnClockwise = true;
     [SerializeField]
@@ -39,7 +39,6 @@ public class HeadMove : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        
         currentRotationPoint = startRotationPos;
         objTransform.position = new Vector2(rotRadius, 0);
         PointInfo newinfo = new PointInfo();
@@ -52,9 +51,9 @@ public class HeadMove : MonoBehaviour
 
     }
 
-    private void Start()
+    protected void Start()
     {
-        
+        imageTrans = GetComponentInChildren<Transform>();
     }
 
     private void OnDestroy()
@@ -71,9 +70,36 @@ public class HeadMove : MonoBehaviour
         flownTime += Time.deltaTime;
         Move();
         TailMove();
-        
+        Mirror();
     }
 
+
+    protected void Mirror()
+    {
+        float y = transform.position.y - currentRotationPoint.y;
+        if (isTurnClockwise)
+        {
+            if (y >= 0)
+            {
+                imageTrans.localScale = new Vector3(-1, 1, 1);
+            }
+            else
+            {
+                imageTrans.localScale = new Vector3(1, 1, 1);
+            }
+        }
+        else
+        {
+            if (y < 0)
+            {
+                imageTrans.localScale = new Vector3(-1, 1, 1);
+            }
+            else
+            {
+                imageTrans.localScale = new Vector3(1, 1, 1);
+            }
+        }
+    }
     private void Move()
     {
         if (Input.GetKeyDown(KeyCode.Space))

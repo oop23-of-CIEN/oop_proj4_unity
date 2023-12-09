@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class TailMove : HeadMove
 {
@@ -17,6 +18,7 @@ public class TailMove : HeadMove
     {
         flownTime += Time.deltaTime;
         Move();
+        Mirror();
     }
 
     void Move()
