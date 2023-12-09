@@ -32,7 +32,7 @@ public class HeadMove : MonoBehaviour
     /// <summary>
     /// rotation point when game start
     /// </summary>
-    Vector2 startRotationPos = Vector2.zero;
+    private Vector2 startRotationPos = Vector2.zero;
 
     public Vector2 currentRotationPoint;
     public float flownTime;
@@ -67,7 +67,7 @@ public class HeadMove : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         flownTime += Time.deltaTime;
         Move();
@@ -75,7 +75,7 @@ public class HeadMove : MonoBehaviour
         
     }
 
-    void Move()
+    private void Move()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -101,7 +101,7 @@ public class HeadMove : MonoBehaviour
         
         Debug.DrawLine(transform.position, currentRotationPoint, Color.blue);
     }
-    void TailMove()
+    private void TailMove()
     {
         for(int i = 0; i < tails.Count; i++)
         {
