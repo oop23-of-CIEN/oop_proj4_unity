@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameUIController : MonoBehaviour
@@ -21,6 +22,13 @@ public class GameUIController : MonoBehaviour
     private void Start()
     {
         SetScoreText();
+        EventManager.Instance.GameOver += SetGameOver;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.GameOver -= SetGameOver;
+
     }
 
     public void GetScore()
@@ -86,6 +94,7 @@ public class GameUIController : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 Reset();
+                SceneManager.LoadScene("GameScene");
 
             }
             else if (Input.GetKey(KeyCode.Escape))
